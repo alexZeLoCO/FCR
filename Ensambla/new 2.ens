@@ -1,0 +1,20 @@
+ORIGEN 00500h
+INICIO primera
+
+.DATOS
+	operando1 VALOR F000h
+	operando2 VALOR 072Ah
+
+.CODIGO
+
+primera:
+	
+	movl r0, BYTEBAJO VALOR operando1
+	movh r0, BYTEALTO VALOR operando1
+	
+	movl r1, BYTEBAJO VALOR operando2
+	movh r1, BYTEALTO VALOR operando2
+	
+	
+	
+FIN

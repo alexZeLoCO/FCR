@@ -1,0 +1,20 @@
+*******************************************************************************
+INSTRUCCIONES
+*******************************************************************************
+Reinicia el simulador (Ejecución - Reiniciar o Ctrl+F10) antes de comenzar el ejercicio.
+El archivo .mem debe cargarse a partir de la dirección de memoria 2100h.
+Debes modificar también el estado del CT para que el trozo de código del archivo.mem sea el próximo en ejecutarse.
+
+xor r5, r4, r4
+movh r5, 03h      
+repeat:
+and r3, r5, r5   
+mov [r5], r3         
+inc r3      ;Instrucción2, paso 4 
+jmp repeat   ;Instrucción1, paso 5         
+
+@---sñ@
+@---vl@
+
+
+

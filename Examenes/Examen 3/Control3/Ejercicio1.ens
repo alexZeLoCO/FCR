@@ -1,0 +1,87 @@
+; Ejercicio 1
+;---------------------------------------
+; Este ejercicio leerá de memoria cierto contenido ubicado a partir de
+; de la dirección apuntada por "texto" e imprimirá su contenido por
+; pantalla.
+;
+; - El contenido de memoria será "2021EXAMENFCR"
+; - El contenido de memoria en la dirección "contador" contiene el número
+;   de carácteres guardados en memoria.
+; - Se imprimirá en blanco sobre fondo cian
+;
+; Completa los huecos con la siguiente información para una ejecución correcta
+;
+;  - La interfaz de video se encuentra mapeada a partir de la
+;    dirección F700h
+;
+;  IMPORTANTE: Haz una captura de pantalla en la que se vea la cadena de texto impresa en pantalla
+;----------------------------------------
+
+ORIGEN 1500h
+INICIO comienzo
+
+.DATOS
+	texto  VALOR "2021EXAMENFCR", 0
+    contador       VALOR --- Hueco 1 ---
+
+.CODIGO
+comienzo:
+
+
+	call imprime_pantalla
+	jmp finalizacion
+
+PROCEDIMIENTO imprime_pantalla
+
+	push r1
+	push r2
+	push r3
+	push r4
+	push r5
+	push r6
+
+	movl r2, --- Hueco 2A --- ;
+	movh r2, --- Hueco 2B --- ; r2 apunta a la esquina superior izquierda en la interfaz de pantalla
+
+	movl r3, BYTEBAJO DIRECCION texto
+	movh r3, BYTEALTO DIRECCION texto
+
+	movl r4, BYTEBAJO DIRECCION contador
+	movh r4, BYTEALTO DIRECCION contador
+
+	mov r6, --- Hueco 3 --- ; Cargamos el numero de caracteres en memoria
+	xor r5, r5,r5; Ponemos el contador local a 0
+
+
+	bucle_impresion:
+
+	add r0, r3, r5 ; acutalizamos el puntero al caracter en memoria
+	mov r1, [r0]   ; obtenemos el caracter de memoria
+	movh r1, --- Hueco 4 --- ; blanco sobre fondo cian
+	mov [r2], r1   ; imprimimos por pantalla
+
+	inc r5
+	inc r2
+	cmp r6,--- Hueco 5 ---     ; Evaluamos si llegamos al final de la cadena
+	brz finalizamos_impresion
+	jmp bucle_impresion
+
+	finalizamos_impresion:
+
+	xor r2,r2,r2
+	mov [r4], r2
+	;restauramos contador en memoria a 0
+
+	pop r6
+	pop r5
+	pop r4
+	pop r3
+	pop r2
+	pop r1
+	ret
+FINP
+
+finalizacion:
+
+FIN
+

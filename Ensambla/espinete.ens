@@ -1,0 +1,47 @@
+; Ejercicio 1
+; -----------
+; Cada vez que se pulsa una tecla del periférico teclado, se completa una línea de pantalla con el carácter '?'.
+; Sucesivas pulsaciones completan sucesivas líneas de pantalla.
+; Se comienza a partir de la primera línea del periférico pantalla, en amarillo sobre fondo azul.
+
+; El teclado se encuentra mapeado a partir de la dirección F100h y la interfaz
+; de vídeo a partir de la posición F500h.
+
+ORIGEN 0300h
+
+.CODIGO
+	movl r2, 01h
+	movh r2, 0F1h ; r2 apunta al registro de estado/control del teclado
+	movl r0, 00h
+	movh r0, 0F5h ; r0 apunta a la esquina superior izquierda en la interfaz de pantalla
+	movl r3, 00h
+	movh r3, 01h ; r3 = 100h, la máscara para detectar pulsación
+	
+	movl r1, 00h
+	movh r1, 0F1h ; r1 apunta al registro de datos del teclado
+	movl r6, 15
+	movh r6, 0  ; r6 contiene el máximo de caracteres que se pueden escribir en una línea
+
+muestreo:
+	mov r4, [r2] ; r4 = valor del registro de estado/control
+	and r4, r4, r3 ; aplica la máscara
+	brz muestreo
+	
+	mov r4, [r1] ; r4 = código de la pulsación = scan-ASCII
+	
+	xor r5, r5, r5 ;contador
+bucle:
+	cmp r6, r5
+	brz fin_linea; finalizar cuando complete la línea
+
+	movl r4, '?'; 
+	movh r4, 0Eh ; '?' en amarillo sobre fondo azul
+	mov [r0], r4 ; escribe el '?' en pantalla	
+	inc r0; actualiza la siguiente posición en pantalla
+	inc r5 ; incremento contador
+	jmp bucle
+	
+fin_linea:
+	
+	jmp muestreo 
+FIN

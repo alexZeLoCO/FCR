@@ -1,0 +1,17 @@
+Responde a las preguntas indicadas más adelante.
+
+Pregunta 1
+¿Cuál es la codificación del carácter almacenado en la posición 4 de texto? (Responder en hexadecimal)
+@--- 1 Responde en papel a la Pregunta 1@
+
+Pregunta 2
+¿A partir de qué dirección de memoria se almacena la variable h? (Responder en hexadecimal)
+@--- 2 Responde en papel a la Pregunta 2 y adjunta una captura de pantalla.@
+
+Pregunta 3
+¿Cuál es la codificación del valor que almacena la variable f? (Responder en hexadecimal)
+@--- 3 Responde en papel a la Pregunta 3@
+
+Pregunta 4
+La salida del programa como has visto no es coherente. Modifica el programa para que imprima un mensaje si el resultado produce desbordamiento. Y sino que imprima el resultado correcto.
+@--- COPIA EL ARCHIVO .CPP A LA CARPETA DE ENTREGA.@

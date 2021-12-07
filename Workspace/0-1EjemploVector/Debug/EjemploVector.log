@@ -1,0 +1,4 @@
+﻿  EjemploVecotr.cpp
+H:\EPI\1\2\FCR\PL\Workspace\0-1EjemploVector\EjemploVecotr.cpp(20,17): warning C4018: '<': no coinciden signed/unsigned
+H:\EPI\1\2\FCR\PL\Workspace\0-1EjemploVector\EjemploVecotr.cpp(66): warning C4700: se utilizó la variable local 'sumados' sin inicializar
+  EjemploVector.vcxproj -> H:\EPI\1\2\FCR\PL\Workspace\0-1EjemploVector\Debug\EjemploVector.exe

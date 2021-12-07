@@ -1,0 +1,7 @@
+﻿  Programa1.cpp
+H:\EPI\1\2\FCR\PL\Examen\Eje1\Eje1\Programa1.cpp(7,16): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+H:\EPI\1\2\FCR\PL\Examen\Eje1\Eje1\Programa1.cpp(8,15): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+H:\EPI\1\2\FCR\PL\Examen\Eje1\Eje1\Programa1.cpp(9,16): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+H:\EPI\1\2\FCR\PL\Examen\Eje1\Eje1\Programa1.cpp(10,15): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+H:\EPI\1\2\FCR\PL\Examen\Eje1\Eje1\Programa1.cpp(11,16): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+  Ejer1-Prog1.vcxproj -> H:\EPI\1\2\FCR\PL\Examen\Eje1\Eje1\Debug\Ejer1-Prog1.exe

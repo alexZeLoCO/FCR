@@ -1,0 +1,55 @@
+ORIGEN 300h
+.PILA 20h
+
+.CODIGO
+MOVL  R0, 03h   ; Número del vector a modificar
+MOVH  R0, 00h
+MOVL  R1, BYTEBAJO DIRECCION rutina_util ; Parte baja de la dirección donde está la rutina
+MOVH  R1, BYTEALTO DIRECCION rutina_util  ; Parte alta de la dirección donde está la rutina
+MOV [R0], R1   ; Instrucción que pone 50C0h en la dirección 0003
+
+STI		;Permitir interrupciones
+
+movl r0, 00h		;Dirección pantalla
+movh r0, 0F0h
+
+movl r1, 40h			;@
+movh r1, 07h
+
+movl r2, 78h		;Ultima direccion pantalla
+movh r2, 0F0h
+
+  ; Una vez instalada la rutina, el programa
+  ; principal se encierra en un bucle infinito
+  
+PorSiempre:
+	mov [r0], r1
+	inc r0
+	cmp r0, r2
+	brnz PorSiempre
+	movl r0, 00h		;R0=R2 ==> R0=F078h
+	jmp PorSiempre
+	
+	; Y esta seria la rutina minima
+PROCEDIMIENTO rutina_util
+	push r0
+	push r1
+	push r2
+	
+	movl r0, 00h		;Dirección luces
+	movh r0, 0E0h
+	
+	movl r2, 00h		;Dirección pantalla
+	movh r2, 0F0h
+	
+	mov r1, [r0]
+	
+	mov [r2], r1
+	
+	pop r2
+	pop r1
+	pop r0
+	IRET
+FINP
+
+FIN

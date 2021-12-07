@@ -1,0 +1,64 @@
+; Ejercicio 2
+; -----------
+; Instala una rutina de servicio de interrupción para la interfaz del periférico luces.
+; Cada vez que se pulsa el botón de interrupción del periférico luces el programa imprime un '*' en
+; la posición de pantalla indicada por el  valor decimal de los interruptores del dispositivo luces.
+; Por ejemplo, si están activos los interruptores 5 y 1 (0000 0000 0010 0010b = 34d), el carácter se muestra en la posición 34.
+; La posición 0 de pantalla se corresponde con la esquina superior izquierda.
+
+; Omitir que el número decimal obtenido en los interruptores sea mayor a 120. Para ello,
+; utilizar SOLO LOS 4 INTERRUPTORES DE LA DERECHA
+; El carácter se imprimirá en negro sobre fondo blanco.
+
+; La configuración de la pantalla y de la interfaz del periférico luces viene dada por
+; el archivo de estado de la simulación proporcionado.
+
+ORIGEN 8000h
+
+.DATOS
+posicion VALOR 0F900h ; Posición inicial de la interfaz de vídeo
+
+.CODIGO
+	movl r0, 01h
+	movh r0, 00h ; r0 = dirección del vector de interrupción de luces
+	
+	movl r1, BYTEBAJO DIRECCION routine		;TEST
+	movh r1, BYTEALTO DIRECCION routine ; r1 = dirección de la rutina (routine) 
+	
+	mov [r0] , r1 ; Instala la rutina de interrupción
+	
+	STI ; habilita las interrupciones
+	
+	jmp -1 ; bucle infinito
+	
+PROCEDIMIENTO routine
+	; Salva los registros modificados
+	push r0
+	push r1
+	push r2
+	push r3
+	push r5
+	
+	movl r0, 00h
+	movh r0, 0FAh ; r0 = dirección inicial de la interfaz de luces
+	movl r2, BYTEBAJO DIRECCION posicion
+    movh r2, BYTEALTO DIRECCION posicion ; r2 = dirección de variable posicion
+	
+	mov r3, [r2]; r3 = valor de posicion en pantalla
+	mov r1, [r0] ; r1 = estado de los interruptores
+	add r3, r3, r1; actualizamos la posición en pantalla al lugar que indica interruptores
+    
+	movl r5, '*' 
+	movh r5, 38h ; negro sobre fondo blanco
+	mov [r3], r5 ; escribimos el asterisco en la pantalla
+
+	; Restaurar los registros modificados
+	pop r5
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	
+	iret
+FINP
+FIN

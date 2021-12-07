@@ -1,0 +1,81 @@
+﻿Los valores de las variables "a" y "b" se consideran como cantidades HEXADECIMALES
+
+*******************************************************************************
+
+El trozo de código C++ a implementar será:
+
+int comp1(int a, int b)
+{
+    int result = 0;
+    if(a < b)
+        result = a;
+    else
+        result = b;  
+        
+    return result;
+}
+
+
+// Programa principal
+
+unsigned int a = 0x257D;
+unsigned int b = 0x1F32;
+
+int c = comp1(a, b); // Ver instrucciones debajo
+
+*******************************************************************************
+INSTRUCCIONES
+*******************************************************************************
+El procedimiento devuelve el resultado en R0. Los parámetros se apilan de derecha a izquierda.
+
+Utiliza el registro r3 como registro auxiliar para almacenar la variable c.
+
+*******************************************************************************
+COMPLETA Y PEGA A CONTINUACIÓN EL CÓDIGO ENSAMBLADOR CORRESPONDIENTE AL PROGRAMA
+*******************************************************************************
+
+; Codigo del programa principal
+
+; Paso de parámetros
+movl r0, 32h
+movh r0, 1Fh
+push r0
+movl r0, 7Dh
+movh r0, 25h
+push r0
+
+; Llamada al procedimiento y postprocesamiento
+call comp1
+inc r7
+inc r7    
+mov r3, r0
+nop
+
+; Codigo del procedimiento
+comp1:
+; Prologo, salvaguarda y recuperacion de parametros
+push r6
+mov r6, r7
+push r1
+push r2
+inc r6 
+inc r6 
+mov r1, [r6] ; numero a en r1
+inc r6
+mov r2, [r6] ; numero b en r2
+
+; Algoritmo de la funcion
+xor r0, r0, r0  ; result = 0
+CMP r1, r2
+brc consecuente
+mov r0, r2 ; result = b
+jmp final
+consecuente:
+mov r0, r1 ; result = a
+
+; Restauracion y retorno
+final:
+pop r2
+pop r1
+pop r6
+ret

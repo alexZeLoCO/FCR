@@ -1,0 +1,61 @@
+ORIGEN 300h
+.DATOS
+	a VALOR 'a'
+	z VALOR 'z'
+	
+.CODIGO
+
+	movl r0, BYTEBAJO DIRECCION z
+	movh r0, BYTEALTO DIRECCION z
+	
+	mov r0, [r0]		;'z'  7A
+
+	movl r1, 00h          ; Cargar la máscara en R1
+	movh r1, 01h
+
+	movl r3, 00h          ; Cargar en R3 la dirección de la primera celda
+	movh r3, 0F0h          ; de pantalla
+
+	movl r4, 20h
+	movh r4, 00h
+
+	movl r6, 00h		;Cargar dirección de datos del teclado
+	movh r6, 0F7h
+	
+bucle:
+	inc r6
+	mov r2, [r6]          ; Leer el registro de estado y control a R2
+	dec r6
+	and r2, r2, r1        ; Realizar operación con la máscara
+	brz bucle            ; Si no se pulsó tecla, volver al principio del bucle
+
+
+	mov r5, [r6]			;Recoger la letra
+	movh r5, 00h			;Eliminar SCAN
+	
+	movl r2, BYTEBAJO DIRECCION a
+	movh r2, BYTEALTO DIRECCION a
+	mov r2, [r2]		;'a'  61
+	
+	cmp r2, r5				;Si (a<=letra)
+	brz si2		;(a==letra)
+	brc si2		;(a<letra)
+	jmp print		;(a>letra)
+	
+	si2:
+	cmp r5, r0				;Si (letra<=z)
+	brz consec	;(letra==z)
+	brc consec	;(letra<z)
+	jmp print		;(letra>z)
+	
+	consec:
+	sub r5, r5, r4			;Hacer mayuscula (letra-20)
+		
+	print:							;Común para todas las letras, mayusculas y minusculas
+	movh r5, 07h		;Formato
+	; Si estamos aquí, se pulsó tecla. Imprimir un asterisco
+	mov [r3], r5          ; Escribir asterisco
+	inc r3                ; Avanzar a la sgte. posición de pantalla
+	jmp bucle             ; Volver al bucle a ver si se pulsan más teclas
+
+FIN

@@ -1,0 +1,20 @@
+ORIGEN 0ABCDh
+INICIO main
+
+.DATOS
+	operandos VALOR 8 VECES 3
+
+.CODIGO
+
+main: 
+ ; Inicializar los punteros
+	movl r0, BYTEBAJO DIRECCION operandos
+	movh r0, BYTEALTO DIRECCION operandos
+	mov r3, [r0]
+	inc r0
+	mov r4, [r0]
+	add r5, r3, r4
+	inc r0
+	mov [r0], r5
+
+FIN

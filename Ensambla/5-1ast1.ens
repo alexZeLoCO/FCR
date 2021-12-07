@@ -1,0 +1,29 @@
+ORIGEN 0500h
+INICIO primera
+
+.DATOS
+	asterisco VALOR '*'
+
+.CODIGO
+primera:
+movl R0, 00h
+movh R0, 0F0h
+
+movl R1, BYTEBAJO DIRECCION asterisco
+movh R1, BYTEALTO DIRECCION asterisco
+
+mov R1, [R1]
+
+movl R2, 0FFh
+movh R2, 00
+
+and R1, R1, R2
+
+movl R2, 00h
+movh R2, 07h
+
+add R1, R1, R2
+
+mov [R0], R1
+
+FIN

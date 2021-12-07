@@ -1,0 +1,56 @@
+﻿
+El fragmento de código C++ a implementar será:
+
+unsigned int result = 0x100;
+unsigned int limit = 0x1AC;
+
+for(unsigned int j = 10; 0 < j; j--)
+  {
+	result = result - j;
+  }
+  
+if(result <  limit)
+	result = 2*result;
+else
+	result = limit;
+
+
+*******************************************************************************
+INSTRUCCIONES
+*******************************************************************************
+Inicializa adecuadamente en el simulador los siguientes registros con los siguientes valores:
+r6 -> result -> 100h 
+r2 -> limit -> 1ACh 
+
+Debes realizar una captura de pantalla del simulador en la que aparezcan estos registros inicializados.
+
+Utilizando "INSTRUCCIONES" inicializa los registros:
+r0 -> j -> Inicializado segun indica el programa
+r1 -> Inicializado a 0
+
+*******************************************************************************
+PEGA A CONTINUACIÓN EL CÓDIGO ENSAMBLADOR CORRESPONDIENTE AL PROGRAMA
+*******************************************************************************
+@---@
+@---cd@
+
+xor r1, r1, r1
+
+for:
+cmp r0, r1
+BRNC fin_for
+sub r6, r6, r0
+dec r0
+jmp for
+
+fin_for:
+
+cmp r6, r2
+BRC consec
+mov r6, r2
+
+jmp sig
+consec:
+add r6, r6, r6
+
+sig:

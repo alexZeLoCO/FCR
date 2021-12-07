@@ -1,0 +1,20 @@
+ORIGEN 0500h
+.DATOS
+	letra VALOR '*'
+	pantalla VALOR 0F000h
+
+.CODIGO
+	
+	movl R0, BYTEBAJO DIRECCION pantalla
+	movh R0, BYTEALTO DIRECCION pantalla
+	mov R0, [R0] ; R0 tiene la dirección de Pantalla
+	
+	movl R1, BYTEBAJO DIRECCION letra
+	movh R1, BYTEALTO DIRECCION letra
+	mov R1, [R1] ; R1 tiene '*' (ASCII)			00 000 111 00000000
+	movh R1, 07h
+	
+	mov R0, R1
+	
+FIN
+	

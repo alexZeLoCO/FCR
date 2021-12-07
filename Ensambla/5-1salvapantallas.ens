@@ -1,0 +1,73 @@
+ORIGEN 0500h
+INICIO primera
+
+.DATOS
+	char VALOR 'a'
+	
+.CODIGO
+
+proc:
+push R6
+mov R6, R7
+
+push R1
+push R3
+push R4
+
+inc R6
+inc R6
+mov R1, [R6]
+
+xor R3, R3, R3
+
+movh R4, 02h
+
+loop:
+
+cmp R1, R3
+BRZ finb		;si es 0 salir
+add R1, R1, R4		;poner atributos
+mov [R0], R1	;Imprimir por pantalla
+jmp loop		;Volver arriba
+
+finb:
+pop R4
+pop R3
+pop R1
+pop R6
+ret
+
+FINP
+
+
+primera:
+movl R0, 00h		;Direccion de pantalla
+movh R0, 0F0h
+
+movl R1, BYTEBAJO DIRECCION char
+movh R1, BYTEALTO DIRECCION char
+
+mov R3, [R1]
+
+movl R2, 0FFh
+movh R2, 0FFh
+
+pantallas:
+
+cmp R0, R2
+brz finpantallas
+
+push R3
+
+call proc		;imprimer caracter
+
+inc R7
+
+inc R3			;Sig caracter
+inc R0			;Sig posicion
+
+jmp pantallas
+finpantallas:
+
+FIN
+

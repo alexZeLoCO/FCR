@@ -1,0 +1,23 @@
+Abre el archivo de captura de Wireshark (captura.pcapng) que se te ha proporcionado, el cual recoge una captura de tramas intercambiadas entre un cliente web y un servidor web. 
+
+Se recomienda desactivar las opciones de resolución de direcciones MAC y direcciones de transporte a través de las preferencias del Wireshark.
+
+******************************************************************
+
+Responde a las siguientes preguntas:
+
+Pregunta 1
+¿Qué flags de IP están activos en la trama 242?
+--- 1 Responde en papel a la Pregunta 1
+
+Pregunta 2
+¿Cuál es el código de respuesta HTTP de la trama 435? Indica también cuál es su codificación en hexadecimal en el paquete. 
+--- 2 Responde en papel a la Pregunta 2
+
+Pregunta 3
+¿Cuál es la codificación hexadecimal del campo Tamaño de ventana para el protocolo TCP de la trama 501? 
+--- 3 Responde en papel a la Pregunta 3
+
+Pregunta 4
+En la trama en la posición No. 22 se reconoció la recepción correcta de un determinado número de bytes TCP. ¿Cuántos? Responde en decimal.
+--- 4 Responde en papel a la Pregunta 4

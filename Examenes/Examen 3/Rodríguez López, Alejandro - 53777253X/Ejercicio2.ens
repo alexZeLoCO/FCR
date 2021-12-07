@@ -1,0 +1,58 @@
+; Ejercicio 2
+; -----------
+; Instala una rutina de servicio de interrupción para la interfaz del periférico teclado.
+; Cada vez que se pulsa una tecla del periférico teclado, se escribe en pantalla la tecla siguiente en el abecedario.
+; Por ejemplo, si se pulsa la tecla 'a', se imprime en pantalla el carácter 'b'.
+; Sucesivas pulsaciones completan sucesivas posiciones de pantalla.
+; Se comienza a partir de la primera línea del periférico pantalla, en blanco sobre fondo negro.
+
+; La configuración de la pantalla y del teclado viene dada por el archivo de estado de la
+; simulación proporcionado.
+
+ORIGEN 7000h
+.DATOS
+posicion VALOR 0FB00h ; Posición en memoria de la esquina superior izquierda de la interfaz de vídeo
+
+.CODIGO
+	movl r2, 07h
+	movh r2, 00h ; r2 = vector de interrupción del teclado
+	
+	movl r0, BYTEBAJO DIRECCION rutina_teclado
+	movh r0, BYTEALTO DIRECCION rutina_teclado
+	mov [r2], r0 ; Instala la rutina de interrupción
+		
+	STI ; habilita las interrupciones
+	
+	jmp -1 ; bucle infinito
+	
+PROCEDIMIENTO rutina_teclado
+	; Salva los registros modificados
+	push r0
+	push r1
+	push r2
+	push r3
+
+	movl r1, BYTEBAJO DIRECCION posicion
+	movh r1, BYTEALTO DIRECCION posicion ; r1 = dirección de la variable posicion
+	mov r0, [r1] ; r0 = posicion en interfaz de pantalla
+	movl r3, 00h
+ 	movh r3, 0F7h ; Cargar la dirección registro de datos en r3
+
+	mov r2, [r3] ; r2 = tecla pulsada
+	inc r2 ; carácter a imprimir en pantalla
+	  
+	movh r2, 07h ; atributo de color blanco sobre fondo negro
+	mov [r0], r2 ; escribe el carácter en pantalla
+
+	inc r0; siguiente posición en pantalla
+	mov [r1], r0 ; actualizar el valor de la posición en la pantalla
+		
+	; Restaura los registros modificados
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	
+	IRET ; termina la rutina de interrupción
+FINP
+FIN

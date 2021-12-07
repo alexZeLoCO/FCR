@@ -1,0 +1,18 @@
+ORIGEN 2100h
+
+INICIO primera
+
+.DATOS
+
+.CODIGO
+
+primera:
+xor r5, r4, r4
+movh r5, 03h      
+repeat:
+and r3, r5, r5   
+mov [r5], r3         
+inc r3
+jmp repeat
+
+FIN
